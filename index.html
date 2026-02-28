@@ -1,0 +1,3554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Earn Tasks - Earn Money by Completing Tasks</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        :root {
+            --primary: #1E3A8A;
+            --secondary: #38BDF8;
+            --accent: #FACC15;
+            --bg-gradient: linear-gradient(135deg, #1E3A8A 0%, #8B5CF6 100%);
+            --text-light: #ffffff;
+            --text-dark: #1f2937;
+            --success: #10B981;
+            --danger: #EF4444;
+            --warning: #F59E0B;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            color: var(--text-dark);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Auth Pages */
+        .auth-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .auth-box {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .auth-header h1 {
+            color: var(--primary);
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .auth-header p {
+            color: #6B7280;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-dark);
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #E5E7EB;
+            border-radius: 10px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--secondary);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #EAB308;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(250, 204, 21, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #0EA5E9;
+        }
+
+        .auth-footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .auth-footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Dashboard */
+        .dashboard {
+            display: none;
+        }
+
+        .dashboard.active {
+            display: block;
+        }
+
+        .header {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .header h2 {
+            color: var(--primary);
+            font-size: 20px;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .header-icon {
+            position: relative;
+            cursor: pointer;
+            color: var(--primary);
+            font-size: 20px;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--danger);
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-pic {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--accent);
+        }
+
+        /* Balance Cards */
+        .balance-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .balance-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .balance-card i {
+            font-size: 24px;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .balance-card h3 {
+            font-size: 12px;
+            color: #6B7280;
+            margin-bottom: 5px;
+        }
+
+        .balance-card .amount {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .dashboard-item {
+            background: white;
+            padding: 20px 15px;
+            border-radius: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .dashboard-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .dashboard-item i {
+            font-size: 28px;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .dashboard-item span {
+            display: block;
+            font-size: 12px;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        /* Section */
+        .section {
+            display: none;
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #E5E7EB;
+        }
+
+        .section-header h3 {
+            color: var(--primary);
+            font-size: 20px;
+        }
+
+        .back-btn {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        /* Tasks */
+        .tasks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .task-card {
+            background: #F9FAFB;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid #E5E7EB;
+            transition: all 0.3s;
+        }
+
+        .task-card:hover {
+            border-color: var(--secondary);
+        }
+
+        .task-card.completed {
+            border-color: var(--success);
+            opacity: 0.7;
+        }
+
+        .task-image {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+        }
+
+        .task-info {
+            padding: 12px;
+            text-align: center;
+        }
+
+        .task-info h4 {
+            font-size: 14px;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+
+        .task-earning {
+            font-size: 12px;
+            color: var(--success);
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: none;
+        }
+
+        .task-card:hover .task-earning {
+            display: block;
+        }
+
+        .task-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            width: 100%;
+        }
+
+        .task-btn:disabled {
+            background: #9CA3AF;
+            cursor: not-allowed;
+        }
+
+        /* Referral */
+        .referral-box {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .referral-box h3 {
+            margin-bottom: 15px;
+        }
+
+        .referral-link {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            word-break: break-all;
+            color: var(--text-dark);
+            font-size: 14px;
+        }
+
+        .copy-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        /* Team */
+        .team-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .team-member {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #E5E7EB;
+            cursor: pointer;
+        }
+
+        .team-member:hover {
+            background: #F9FAFB;
+        }
+
+        .team-member img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 15px;
+        }
+
+        .team-member-info h4 {
+            font-size: 14px;
+            color: var(--text-dark);
+        }
+
+        .team-member-info p {
+            font-size: 12px;
+            color: #6B7280;
+        }
+
+        /* Levels */
+        .level-card {
+            background: #F9FAFB;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .level-card.completed {
+            border-left-color: var(--success);
+        }
+
+        .level-card h4 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .level-card p {
+            font-size: 14px;
+            color: #6B7280;
+            margin-bottom: 10px;
+        }
+
+        .level-progress {
+            background: #E5E7EB;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .level-progress-bar {
+            background: var(--success);
+            height: 100%;
+            transition: width 0.3s;
+        }
+
+        /* Withdrawal */
+        .withdrawal-form {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .withdrawal-info {
+            background: #FEF3C7;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .withdrawal-info strong {
+            color: var(--warning);
+        }
+
+        .withdrawal-history {
+            margin-top: 30px;
+        }
+
+        .withdrawal-item {
+            background: #F9FAFB;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .withdrawal-item.pending {
+            border-left: 4px solid var(--warning);
+        }
+
+        .withdrawal-item.approved {
+            border-left: 4px solid var(--success);
+        }
+
+        .withdrawal-item.rejected {
+            border-left: 4px solid var(--danger);
+        }
+
+        /* Profile */
+        .profile-form {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .profile-picture-upload {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .profile-picture-upload img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--accent);
+            margin-bottom: 10px;
+        }
+
+        /* Chat */
+        .chat-container {
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px;
+            background: #F9FAFB;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .chat-message {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .chat-message.sent {
+            flex-direction: row-reverse;
+        }
+
+        .chat-message img {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            margin: 0 10px;
+        }
+
+        .chat-message-content {
+            background: white;
+            padding: 10px 15px;
+            border-radius: 10px;
+            max-width: 70%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .chat-message.sent .chat-message-content {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .chat-message-image {
+            max-width: 100%;
+            border-radius: 8px;
+            margin-top: 5px;
+        }
+
+        .chat-input {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #E5E7EB;
+            border-radius: 10px;
+        }
+
+        .chat-input button {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        /* Notifications */
+        .notification-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .notification-item {
+            padding: 15px;
+            border-bottom: 1px solid #E5E7EB;
+            cursor: pointer;
+        }
+
+        .notification-item:hover {
+            background: #F9FAFB;
+        }
+
+        .notification-item.unread {
+            background: #EFF6FF;
+        }
+
+        .notification-item h4 {
+            font-size: 14px;
+            color: var(--text-dark);
+            margin-bottom: 5px;
+        }
+
+        .notification-item p {
+            font-size: 12px;
+            color: #6B7280;
+        }
+
+        .notification-item .time {
+            font-size: 11px;
+            color: #9CA3AF;
+            margin-top: 5px;
+        }
+
+        /* Social Links */
+        .social-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .social-card {
+            background: #F9FAFB;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            text-decoration: none;
+            color: var(--text-dark);
+            transition: all 0.3s;
+        }
+
+        .social-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .social-card i {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .social-card.telegram i {
+            color: #0088CC;
+        }
+
+        .social-card.youtube i {
+            color: #FF0000;
+        }
+
+        .social-card.app i {
+            color: var(--primary);
+        }
+
+        /* Registration Fees */
+        .registration-fees {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .payment-details {
+            background: #F9FAFB;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .payment-details h4 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .payment-details p {
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .payment-details strong {
+            color: var(--text-dark);
+        }
+
+        .screenshot-upload {
+            border: 2px dashed #E5E7EB;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .screenshot-upload:hover {
+            border-color: var(--secondary);
+        }
+
+        .screenshot-preview {
+            max-width: 100%;
+            max-height: 200px;
+            margin-top: 10px;
+            border-radius: 8px;
+        }
+
+        /* Admin Panel */
+        .admin-dashboard {
+            display: none;
+        }
+
+        .admin-dashboard.active {
+            display: block;
+        }
+
+        .admin-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .admin-stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .admin-stat-card i {
+            font-size: 24px;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .admin-stat-card h3 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .admin-stat-card p {
+            font-size: 12px;
+            color: #6B7280;
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        .admin-table th,
+        .admin-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .admin-table th {
+            background: #F9FAFB;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .admin-table tr:hover {
+            background: #F9FAFB;
+        }
+
+        .status-badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .status-badge.pending {
+            background: #FEF3C7;
+            color: var(--warning);
+        }
+
+        .status-badge.approved {
+            background: #D1FAE5;
+            color: var(--success);
+        }
+
+        .status-badge.rejected {
+            background: #FEE2E2;
+            color: var(--danger);
+        }
+
+        .action-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            margin-right: 5px;
+        }
+
+        .action-btn.approve {
+            background: var(--success);
+            color: white;
+        }
+
+        .action-btn.reject {
+            background: var(--danger);
+            color: white;
+        }
+
+        .action-btn.view {
+            background: var(--secondary);
+            color: white;
+        }
+
+        /* Pending Status */
+        .pending-status {
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        .pending-status i {
+            font-size: 64px;
+            color: var(--warning);
+            margin-bottom: 20px;
+        }
+
+        .pending-status h2 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .pending-status p {
+            color: #6B7280;
+            font-size: 14px;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-header h3 {
+            color: var(--primary);
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #6B7280;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            z-index: 1001;
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+
+        .toast.active {
+            display: block;
+        }
+
+        .toast.success {
+            border-left: 4px solid var(--success);
+        }
+
+        .toast.error {
+            border-left: 4px solid var(--danger);
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .auth-box {
+                padding: 30px 20px;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .balance-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .header h2 {
+                font-size: 16px;
+            }
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .loading i {
+            font-size: 32px;
+            color: var(--secondary);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Online Status */
+        .online-status {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 12px;
+            color: var(--success);
+        }
+
+        .online-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+    </style>
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
+    <!-- Auth Container -->
+    <div class="auth-container" id="authContainer">
+        <!-- Login Form -->
+        <div class="auth-box" id="loginForm">
+            <div class="auth-header">
+                <h1>🌟 Earn Tasks</h1>
+                <p>Login to your account</p>
+            </div>
+            <form id="loginFormElement">
+                <div class="form-group">
+                    <label>Email or Mobile Number</label>
+                    <input type="text" id="loginEmail" required placeholder="Enter email or mobile">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="loginPassword" required placeholder="Enter password">
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+            <div class="auth-footer">
+                <p>Don't have an account? <a href="#" onclick="showRegister()">Register Now</a></p>
+            </div>
+        </div>
+
+        <!-- Register Form -->
+        <div class="auth-box" id="registerForm" style="display: none;">
+            <div class="auth-header">
+                <h1>🌟 Earn Tasks</h1>
+                <p>Create your account</p>
+            </div>
+            <form id="registerFormElement">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="regName" required placeholder="Enter full name">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="regEmail" required placeholder="Enter email">
+                </div>
+                <div class="form-group">
+                    <label>WhatsApp Number</label>
+                    <input type="tel" id="regWhatsApp" required placeholder="Enter WhatsApp number">
+                </div>
+                <div class="form-group">
+                    <label>City</label>
+                    <input type="text" id="regCity" required placeholder="Enter city">
+                </div>
+                <div class="form-group">
+                    <label>Full Address</label>
+                    <input type="text" id="regAddress" required placeholder="Enter full address">
+                </div>
+                <div class="form-group">
+                    <label>Country</label>
+                    <input type="text" id="regCountry" required placeholder="Enter country">
+                </div>
+                <div class="form-group">
+                    <label>Referral Code (Optional)</label>
+                    <input type="text" id="regReferral" placeholder="Enter referral code">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="regPassword" required placeholder="Create password">
+                </div>
+                <button type="submit" class="btn btn-primary">Register Now</button>
+            </form>
+            <div class="auth-footer">
+                <p>Already have an account? <a href="#" onclick="showLogin()">Login</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pending Status -->
+    <div class="container pending-status" id="pendingStatus" style="display: none;">
+        <i class="fas fa-clock"></i>
+        <h2>Account Pending Approval</h2>
+        <p>Your registration fee is under review. Please wait for admin approval.</p>
+        <p style="margin-top: 10px;">You will be able to access the dashboard once approved.</p>
+    </div>
+
+    <!-- User Dashboard -->
+    <div class="container dashboard" id="userDashboard">
+        <!-- Header -->
+        <div class="header">
+            <h2>🌟 Earn Tasks</h2>
+            <div class="header-icons">
+                <div class="header-icon" onclick="showSection('notifications')">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge" id="notificationBadge" style="display: none;">0</span>
+                </div>
+                <div class="header-icon" onclick="showSection('support')">
+                    <i class="fas fa-headset"></i>
+                </div>
+                <img src="https://via.placeholder.com/40" alt="Profile" class="profile-pic" id="headerProfilePic" onclick="showSection('profile')">
+            </div>
+        </div>
+
+        <!-- Balance Cards -->
+        <div class="balance-cards">
+            <div class="balance-card">
+                <i class="fas fa-wallet"></i>
+                <h3>Current Balance</h3>
+                <div class="amount">$<span id="currentBalance">0.000</span></div>
+            </div>
+            <div class="balance-card">
+                <i class="fas fa-coins"></i>
+                <h3>Total Balance</h3>
+                <div class="amount">$<span id="totalBalance">0.000</span></div>
+            </div>
+            <div class="balance-card">
+                <i class="fas fa-users"></i>
+                <h3>Team Members</h3>
+                <div class="amount" id="teamCount">0</div>
+            </div>
+            <div class="balance-card">
+                <i class="fas fa-tasks"></i>
+                <h3>Tasks Completed</h3>
+                <div class="amount" id="tasksCompleted">0/10</div>
+            </div>
+        </div>
+
+        <!-- Dashboard Grid -->
+        <div class="dashboard-grid">
+            <div class="dashboard-item" onclick="showSection('tasks')">
+                <i class="fas fa-tasks"></i>
+                <span>Tasks</span>
+            </div>
+            <div class="dashboard-item" onclick="showSection('withdraw')">
+                <i class="fas fa-money-bill-wave"></i>
+                <span>Withdraw</span>
+            </div>
+            <div class="dashboard-item" onclick="showSection('withdrawal-history')">
+                <i class="fas fa-history"></i>
+                <span>History</span>
+            </div>
+            <div class="dashboard-item" onclick="showSection('referral')">
+                <i class="fas fa-link"></i>
+                <span>Referral</span>
+            </div>
+            <div class="dashboard-item" onclick="showSection('team')">
+                <i class="fas fa-users"></i>
+                <span>Team</span>
+            </div>
+            <div class="dashboard-item" onclick="showSection('levels')">
+                <i class="fas fa-trophy"></i>
+                <span>Levels</span>
+            </div>
+            <div class="dashboard-item" onclick="showSection('profile')">
+                <i class="fas fa-user"></i>
+                <span>Profile</span>
+            </div>
+            <div class="dashboard-item" onclick="showSection('support')">
+                <i class="fas fa-headset"></i>
+                <span>Support</span>
+            </div>
+            <div class="dashboard-item" onclick="showSection('social')">
+                <i class="fas fa-share-alt"></i>
+                <span>Social</span>
+            </div>
+            <div class="dashboard-item" onclick="showSection('notifications')">
+                <i class="fas fa-bell"></i>
+                <span>Notifications</span>
+            </div>
+        </div>
+
+        <!-- Tasks Section -->
+        <div class="section" id="tasksSection">
+            <div class="section-header">
+                <h3>📋 Daily Tasks</h3>
+                <button class="back-btn" onclick="hideSection()">Back</button>
+            </div>
+            <p style="margin-bottom: 15px; color: #6B7280;">Complete tasks to earn money. Tasks reset every 24 hours at 12:00 AM.</p>
+            <div class="tasks-grid" id="tasksGrid">
+                <!-- Tasks will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Withdraw Section -->
+        <div class="section" id="withdrawSection">
+            <div class="section-header">
+                <h3>💸 Withdraw</h3>
+                <button class="back-btn" onclick="hideSection()">Back</button>
+            </div>
+            <div class="withdrawal-form">
+                <div class="withdrawal-info">
+                    <p><strong>Minimum Withdrawal:</strong> $0.50</p>
+                    <p><strong>Withdrawal Fee:</strong> 6%</p>
+                    <p><strong>Available Balance:</strong> $<span id="withdrawAvailable">0.000</span></p>
+                </div>
+                <form id="withdrawForm">
+                    <div class="form-group">
+                        <label>Withdrawal Method</label>
+                        <select id="withdrawMethod" required>
+                            <option value="">Select Method</option>
+                            <option value="easypaisa">Easypaisa</option>
+                            <option value="jazzcash">JazzCash</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Account Number</label>
+                        <input type="text" id="withdrawAccount" required placeholder="Enter account number">
+                    </div>
+                    <div class="form-group">
+                        <label>Account Name</label>
+                        <input type="text" id="withdrawName" required placeholder="Enter account name">
+                    </div>
+                    <div class="form-group">
+                        <label>Amount (USD)</label>
+                        <input type="number" id="withdrawAmount" required placeholder="Enter amount" min="0.5" step="0.01">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit Withdrawal</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Withdrawal History Section -->
+        <div class="section" id="withdrawal-historySection">
+            <div class="section-header">
+                <h3>📜 Withdrawal History</h3>
+                <button class="back-btn" onclick="hideSection()">Back</button>
+            </div>
+            <div id="withdrawalHistoryList">
+                <!-- History will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Referral Section -->
+        <div class="section" id="referralSection">
+            <div class="section-header">
+                <h3>🔗 Referral System</h3>
+                <button class="back-btn" onclick="hideSection()">Back</button>
+            </div>
+            <div class="referral-box">
+                <h3>Your Referral Link</h3>
+                <div class="referral-link" id="referralLink">Loading...</div>
+                <button class="copy-btn" onclick="copyReferralLink()">
+                    <i class="fas fa-copy"></i> Copy Link
+                </button>
+            </div>
+            <div class="referral-box" style="background: linear-gradient(135deg, #10B981, #059669);">
+                <h3>Your Referral Code</h3>
+                <div class="referral-link" id="referralCode">Loading...</div>
+                <button class="copy-btn" onclick="copyReferralCode()">
+                    <i class="fas fa-copy"></i> Copy Code
+                </button>
+            </div>
+            <div style="background: #F9FAFB; padding: 20px; border-radius: 12px;">
+                <h4 style="color: var(--primary); margin-bottom: 15px;">🎁 Referral Benefits</h4>
+                <ul style="padding-left: 20px; color: #6B7280; font-size: 14px; line-height: 2;">
+                    <li>Get $0.45 bonus when referral joins and deposits</li>
+                    <li>Task earnings increase by $0.005 per referral</li>
+                    <li>Multi-level bonuses up to 5 levels</li>
+                    <li>Instant $0.30 bonus for 3 referrals in 24 hours</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Team Section -->
+        <div class="section" id="teamSection">
+            <div class="section-header">
+                <h3>👥 My Team</h3>
+                <button class="back-btn" onclick="hideSection()">Back</button>
+            </div>
+            <div class="team-list" id="teamList">
+                <!-- Team members will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Levels Section -->
+        <div class="section" id="levelsSection">
+            <div class="section-header">
+                <h3>🏆 Level Bonuses</h3>
+                <button class="back-btn" onclick="hideSection()">Back</button>
+            </div>
+            <div id="levelsList">
+                <!-- Levels will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Profile Section -->
+        <div class="section" id="profileSection">
+            <div class="section-header">
+                <h3>👤 Profile</h3>
+                <button class="back-btn" onclick="hideSection()">Back</button>
+            </div>
+            <div class="profile-form">
+                <div class="profile-picture-upload">
+                    <img src="https://via.placeholder.com/100" alt="Profile" id="profilePicture">
+                    <input type="file" id="profilePictureInput" accept="image/*" style="display: none;" onchange="uploadProfilePicture(event)">
+                    <button class="btn btn-secondary" onclick="document.getElementById('profilePictureInput').click()" style="margin-top: 10px;">
+                        <i class="fas fa-camera"></i> Change Picture
+                    </button>
+                </div>
+                <form id="profileForm">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" id="profileName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="profileEmail" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>WhatsApp Number</label>
+                        <input type="tel" id="profileWhatsApp" required>
+                    </div>
+                    <div class="form-group">
+                        <label>City</label>
+                        <input type="text" id="profileCity" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Address</label>
+                        <input type="text" id="profileAddress" required>
+                    </div>
+                    <div class="form-group">
+                        <label>New Password (leave blank to keep current)</label>
+                        <input type="password" id="profileNewPassword" placeholder="Enter new password">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update Profile</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Support Section -->
+        <div class="section" id="supportSection">
+            <div class="section-header">
+                <h3>💬 Support Chat</h3>
+                <button class="back-btn" onclick="hideSection()">Back</button>
+            </div>
+            <div class="online-status" style="margin-bottom: 15px;">
+                <div class="online-dot"></div>
+                <span>Admin Online</span>
+            </div>
+            <div class="chat-container">
+                <div class="chat-messages" id="chatMessages">
+                    <!-- Messages will be loaded here -->
+                </div>
+                <div class="chat-input">
+                    <input type="text" id="chatInput" placeholder="Type your message...">
+                    <button onclick="sendChatMessage()">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                    <button onclick="document.getElementById('chatImageInput').click()" style="background: var(--accent);">
+                        <i class="fas fa-image"></i>
+                    </button>
+                    <input type="file" id="chatImageInput" accept="image/*" style="display: none;" onchange="sendChatImage(event)">
+                </div>
+            </div>
+        </div>
+
+        <!-- Social Section -->
+        <div class="section" id="socialSection">
+            <div class="section-header">
+                <h3>🌐 Social Links</h3>
+                <button class="back-btn" onclick="hideSection()">Back</button>
+            </div>
+            <div class="social-links">
+                <a href="https://t.me/tasksearn12" target="_blank" class="social-card telegram">
+                    <i class="fab fa-telegram"></i>
+                    <h4>Telegram</h4>
+                    <p>Join our channel</p>
+                </a>
+                <a href="https://youtube.com/@shamastechzone?si=qYMaApcdrPCJr0VY" target="_blank" class="social-card youtube">
+                    <i class="fab fa-youtube"></i>
+                    <h4>YouTube</h4>
+                    <p>Watch tutorials</p>
+                </a>
+                <a href="https://www.appcreator24.com/app3908425-ryksaq" target="_blank" class="social-card app">
+                    <i class="fas fa-download"></i>
+                    <h4>Download App</h4>
+                    <p>Get the mobile app</p>
+                </a>
+            </div>
+        </div>
+
+        <!-- Notifications Section -->
+        <div class="section" id="notificationsSection">
+            <div class="section-header">
+                <h3>🔔 Notifications</h3>
+                <button class="back-btn" onclick="hideSection()">Back</button>
+            </div>
+            <div class="notification-list" id="notificationList">
+                <!-- Notifications will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Registration Fees Form -->
+    <div class="container" id="registrationFees" style="display: none;">
+        <div class="auth-box" style="max-width: 600px;">
+            <div class="auth-header">
+                <h1>💳 Registration Fees</h1>
+                <p>Complete your registration</p>
+            </div>
+            <div class="registration-fees">
+                <div class="payment-details">
+                    <h4>Payment Details</h4>
+                    <p><strong>Rast ID:</strong> PK33TMFB0000000084823818</p>
+                    <p><strong>Account Name:</strong> Mansoor Ahmad</p>
+                    <p><strong>Amount:</strong> 2.3 USD (670 PKR)</p>
+                </div>
+                <form id="registrationFeesForm">
+                    <div class="form-group">
+                        <label>Your Account Number</label>
+                        <input type="text" id="feeAccountNumber" required placeholder="Enter your account number">
+                    </div>
+                    <div class="form-group">
+                        <label>Your Account Name</label>
+                        <input type="text" id="feeAccountName" required placeholder="Enter your account name">
+                    </div>
+                    <div class="form-group">
+                        <label>Transaction ID (12 digits)</label>
+                        <input type="text" id="feeTransactionId" required placeholder="Enter 12-digit transaction ID" maxlength="12" minlength="12">
+                    </div>
+                    <div class="screenshot-upload" onclick="document.getElementById('feeScreenshot').click()">
+                        <i class="fas fa-cloud-upload-alt" style="font-size: 32px; color: var(--secondary); margin-bottom: 10px;"></i>
+                        <p>Click to upload payment screenshot</p>
+                        <input type="file" id="feeScreenshot" accept="image/*" style="display: none;" onchange="previewScreenshot(event)">
+                        <img id="screenshotPreview" class="screenshot-preview" style="display: none;">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit Payment</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div class="container admin-dashboard" id="adminDashboard">
+        <div class="header">
+            <h2>🔐 Admin Panel</h2>
+            <div class="header-icons">
+                <div class="header-icon" onclick="showAdminSection('notifications')">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge" id="adminNotificationBadge" style="display: none;">0</span>
+                </div>
+                <button class="back-btn" onclick="adminLogout()">Logout</button>
+            </div>
+        </div>
+
+        <!-- Admin Stats -->
+        <div class="admin-stats">
+            <div class="admin-stat-card">
+                <i class="fas fa-users"></i>
+                <h3 id="adminTotalUsers">0</h3>
+                <p>Total Users</p>
+            </div>
+            <div class="admin-stat-card">
+                <i class="fas fa-dollar-sign"></i>
+                <h3 id="adminTotalFees">$0</h3>
+                <p>Total Registration Fees</p>
+            </div>
+            <div class="admin-stat-card">
+                <i class="fas fa-money-bill-wave"></i>
+                <h3 id="adminTotalWithdrawals">$0</h3>
+                <p>Total Withdrawals</p>
+            </div>
+            <div class="admin-stat-card">
+                <i class="fas fa-check-circle"></i>
+                <h3 id="adminApprovedUsers">0</h3>
+                <p>Approved Users</p>
+            </div>
+            <div class="admin-stat-card">
+                <i class="fas fa-clock"></i>
+                <h3 id="adminPendingFees">0</h3>
+                <p>Pending Fees</p>
+            </div>
+            <div class="admin-stat-card">
+                <i class="fas fa-hourglass-half"></i>
+                <h3 id="adminPendingWithdrawals">0</h3>
+                <p>Pending Withdrawals</p>
+            </div>
+        </div>
+
+        <!-- Admin Dashboard Grid -->
+        <div class="dashboard-grid">
+            <div class="dashboard-item" onclick="showAdminSection('users')">
+                <i class="fas fa-users"></i>
+                <span>Users</span>
+            </div>
+            <div class="dashboard-item" onclick="showAdminSection('pending-fees')">
+                <i class="fas fa-clock"></i>
+                <span>Pending Fees</span>
+            </div>
+            <div class="dashboard-item" onclick="showAdminSection('pending-withdrawals')">
+                <i class="fas fa-money-bill-wave"></i>
+                <span>Pending Withdrawals</span>
+            </div>
+            <div class="dashboard-item" onclick="showAdminSection('support')">
+                <i class="fas fa-headset"></i>
+                <span>Support Chat</span>
+            </div>
+            <div class="dashboard-item" onclick="showAdminSection('notifications')">
+                <i class="fas fa-bell"></i>
+                <span>Notifications</span>
+            </div>
+        </div>
+
+        <!-- Admin Users Section -->
+        <div class="section" id="admin-usersSection">
+            <div class="section-header">
+                <h3>👥 All Users</h3>
+                <button class="back-btn" onclick="hideAdminSection()">Back</button>
+            </div>
+            <div style="overflow-x: auto;">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Password</th>
+                            <th>WhatsApp</th>
+                            <th>City</th>
+                            <th>Balance</th>
+                            <th>Referrals</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminUsersList">
+                        <!-- Users will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Admin Pending Fees Section -->
+        <div class="section" id="admin-pending-feesSection">
+            <div class="section-header">
+                <h3>⏰ Pending Registration Fees</h3>
+                <button class="back-btn" onclick="hideAdminSection()">Back</button>
+            </div>
+            <div id="adminPendingFeesList">
+                <!-- Pending fees will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Admin Pending Withdrawals Section -->
+        <div class="section" id="admin-pending-withdrawalsSection">
+            <div class="section-header">
+                <h3>⏰ Pending Withdrawals</h3>
+                <button class="back-btn" onclick="hideAdminSection()">Back</button>
+            </div>
+            <div id="adminPendingWithdrawalsList">
+                <!-- Pending withdrawals will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Admin Support Section -->
+        <div class="section" id="admin-supportSection">
+            <div class="section-header">
+                <h3>💬 Support Chat</h3>
+                <button class="back-btn" onclick="hideAdminSection()">Back</button>
+            </div>
+            <div id="adminChatUsers">
+                <!-- Chat users will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Admin Notifications Section -->
+        <div class="section" id="admin-notificationsSection">
+            <div class="section-header">
+                <h3>🔔 Notifications</h3>
+                <button class="back-btn" onclick="hideAdminSection()">Back</button>
+            </div>
+            <div class="notification-list" id="adminNotificationList">
+                <!-- Notifications will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Modal Title</h3>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div id="modalBody">
+                <!-- Modal content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, ref, set, get, push, update, remove, onValue, query, orderByChild, equalTo } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAfEob6WY3iKH60HzyfdkrNUxO_hgFp31g",
+            authDomain: "earn-tasks-f52da.firebaseapp.com",
+            databaseURL: "https://earn-tasks-f52da-default-rtdb.firebaseio.com",
+            projectId: "earn-tasks-f52da",
+            storageBucket: "earn-tasks-f52da.firebasestorage.app",
+            messagingSenderId: "841790349654",
+            appId: "1:841790349654:web:83927c49f307d0d923b6f7"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        // Global Variables
+        let currentUser = null;
+        let isAdmin = false;
+        let currentUserId = null;
+        let taskEarnings = 0.013;
+        let lastReferralDate = null;
+        let dailyReferralCount = 0;
+
+        // Admin Credentials
+        const ADMIN_EMAIL = "business236670@gmail.com";
+        const ADMIN_PASSWORD = "Sh@mas157884236670";
+        const SPECIAL_USER_EMAIL = "wide4421@gmail.com";
+
+        // Task Images
+        const taskImages = [
+            "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=300",
+            "https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=300",
+            "https://images.unsplash.com/photo-1611162618071-b39a2ec055fb?w=300",
+            "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=300",
+            "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=300",
+            "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=300",
+            "https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=300",
+            "https://images.unsplash.com/photo-1611162618071-b39a2ec055fb?w=300",
+            "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=300",
+            "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=300"
+        ];
+
+        // Initialize App
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuth();
+            setupEventListeners();
+        });
+
+        // Check Authentication
+        function checkAuth() {
+            const savedUser = localStorage.getItem('currentUser');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                currentUserId = currentUser.id;
+                
+                if (currentUser.email === ADMIN_EMAIL) {
+                    isAdmin = true;
+                    showAdminDashboard();
+                } else {
+                    isAdmin = false;
+                    loadUserData();
+                }
+            }
+        }
+
+        // Setup Event Listeners
+        function setupEventListeners() {
+            // Login Form
+            document.getElementById('loginFormElement').addEventListener('submit', handleLogin);
+            
+            // Register Form
+            document.getElementById('registerFormElement').addEventListener('submit', handleRegister);
+            
+            // Registration Fees Form
+            document.getElementById('registrationFeesForm').addEventListener('submit', handleRegistrationFees);
+            
+            // Withdraw Form
+            document.getElementById('withdrawForm').addEventListener('submit', handleWithdraw);
+            
+            // Profile Form
+            document.getElementById('profileForm').addEventListener('submit', handleProfileUpdate);
+            
+            // Chat Input
+            document.getElementById('chatInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendChatMessage();
+                }
+            });
+        }
+
+        // Show Login
+        window.showLogin = function() {
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('registerForm').style.display = 'none';
+        }
+
+        // Show Register
+        window.showRegister = function() {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('registerForm').style.display = 'block';
+            
+            // Check for referral code in URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const referralCode = urlParams.get('ref');
+            if (referralCode) {
+                document.getElementById('regReferral').value = referralCode;
+            }
+        }
+
+        // Handle Login
+        async function handleLogin(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            
+            try {
+                // Check admin login
+                if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+                    currentUser = {
+                        email: ADMIN_EMAIL,
+                        name: 'Admin',
+                        isAdmin: true
+                    };
+                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                    isAdmin = true;
+                    showAdminDashboard();
+                    showToast('Welcome Admin!', 'success');
+                    return;
+                }
+                
+                // Check user login
+                const usersRef = ref(db, 'users');
+                const snapshot = await get(usersRef);
+                
+                let foundUser = null;
+                let foundUserId = null;
+                
+                snapshot.forEach((childSnapshot) => {
+                    const user = childSnapshot.val();
+                    if ((user.email === email || user.whatsapp === email) && user.password === password) {
+                        foundUser = user;
+                        foundUserId = childSnapshot.key;
+                    }
+                });
+                
+                if (foundUser) {
+                    currentUser = foundUser;
+                    currentUserId = foundUserId;
+                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                    
+                    if (foundUser.status === 'pending') {
+                        showPendingStatus();
+                    } else if (foundUser.status === 'approved') {
+                        loadUserData();
+                    } else if (!foundUser.registrationFee) {
+                        showRegistrationFees();
+                    }
+                    
+                    showToast('Login successful!', 'success');
+                } else {
+                    showToast('Invalid email or password', 'error');
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                showToast('Login failed. Please try again.', 'error');
+            }
+        }
+
+        // Handle Register
+        async function handleRegister(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('regName').value.trim();
+            const email = document.getElementById('regEmail').value.trim().toLowerCase();
+            const whatsapp = document.getElementById('regWhatsApp').value.trim();
+            const city = document.getElementById('regCity').value.trim();
+            const address = document.getElementById('regAddress').value.trim();
+            const country = document.getElementById('regCountry').value.trim();
+            const referralCode = document.getElementById('regReferral').value.trim();
+            const password = document.getElementById('regPassword').value;
+            
+            try {
+                // Check if email already exists
+                const usersRef = ref(db, 'users');
+                const snapshot = await get(usersRef);
+                
+                let emailExists = false;
+                snapshot.forEach((childSnapshot) => {
+                    if (childSnapshot.val().email === email) {
+                        emailExists = true;
+                    }
+                });
+                
+                if (emailExists) {
+                    showToast('Email already registered', 'error');
+                    return;
+                }
+                
+                // Generate unique referral code
+                const uniqueReferralCode = 'ET' + Math.random().toString(36).substring(2, 8).toUpperCase();
+                
+                // Create user
+                const newUser = {
+                    name,
+                    email,
+                    whatsapp,
+                    city,
+                    address,
+                    country,
+                    referralCode: uniqueReferralCode,
+                    referredBy: referralCode || null,
+                    password,
+                    currentBalance: 0,
+                    totalBalance: 0,
+                    perTaskEarning: email === SPECIAL_USER_EMAIL ? 0.7 : 0.013,
+                    referrals: 0,
+                    team: [],
+                    level: 0,
+                    levelBonusClaimed: [],
+                    tasksCompleted: 0,
+                    lastTaskReset: null,
+                    completedTasks: [],
+                    withdrawalCount: 0,
+                    totalWithdrawn: 0,
+                    registrationFee: null,
+                    status: 'pending',
+                    profilePicture: 'https://via.placeholder.com/100',
+                    createdAt: new Date().toISOString(),
+                    lastReferralDate: null,
+                    dailyReferralCount: 0
+                };
+                
+                // Save to database
+                const newUserRef = push(usersRef);
+                await set(newUserRef, newUser);
+                
+                // If referred by someone, update referrer's team
+                if (referralCode) {
+                    await updateReferrerTeam(referralCode, newUserRef.key);
+                }
+                
+                currentUser = newUser;
+                currentUserId = newUserRef.key;
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                
+                showRegistrationFees();
+                showToast('Your account has been successfully created', 'success');
+                
+            } catch (error) {
+                console.error('Registration error:', error);
+                showToast('Registration failed. Please try again.', 'error');
+            }
+        }
+
+        // Update Referrer Team
+        async function updateReferrerTeam(referralCode, newUserId) {
+            try {
+                const usersRef = ref(db, 'users');
+                const snapshot = await get(usersRef);
+                
+                snapshot.forEach((childSnapshot) => {
+                    const user = childSnapshot.val();
+                    if (user.referralCode === referralCode) {
+                        const referrerId = childSnapshot.key;
+                        const teamRef = ref(db, `users/${referrerId}/team`);
+                        push(teamRef, newUserId);
+                        
+                        // Update referrer's referral count
+                        update(ref(db, `users/${referrerId}`), {
+                            referrals: user.referrals + 1
+                        });
+                    }
+                });
+            } catch (error) {
+                console.error('Error updating referrer team:', error);
+            }
+        }
+
+        // Show Registration Fees
+        function showRegistrationFees() {
+            document.getElementById('authContainer').style.display = 'none';
+            document.getElementById('registrationFees').style.display = 'block';
+        }
+
+        // Handle Registration Fees
+        async function handleRegistrationFees(e) {
+            e.preventDefault();
+            
+            const accountNumber = document.getElementById('feeAccountNumber').value.trim();
+            const accountName = document.getElementById('feeAccountName').value.trim();
+            const transactionId = document.getElementById('feeTransactionId').value.trim();
+            const screenshotInput = document.getElementById('feeScreenshot');
+            
+            if (transactionId.length !== 12) {
+                showToast('Transaction ID must be exactly 12 digits', 'error');
+                return;
+            }
+            
+            if (screenshotInput.files.length === 0) {
+                showToast('Please upload payment screenshot', 'error');
+                return;
+            }
+            
+            try {
+                // Convert screenshot to base64
+                const screenshot = await fileToBase64(screenshotInput.files[0]);
+                
+                // Update user with registration fee info
+                const feeData = {
+                    accountNumber,
+                    accountName,
+                    transactionId,
+                    screenshot,
+                    submittedAt: new Date().toISOString(),
+                    status: 'pending'
+                };
+                
+                await update(ref(db, `users/${currentUserId}`), {
+                    registrationFee: feeData
+                });
+                
+                // Create notification for admin
+                const notificationRef = push(ref(db, 'adminNotifications'));
+                await set(notificationRef, {
+                    type: 'registration_fee',
+                    userId: currentUserId,
+                    userName: currentUser.name,
+                    accountNumber,
+                    accountName,
+                    transactionId,
+                    screenshot,
+                    timestamp: new Date().toISOString(),
+                    read: false
+                });
+                
+                currentUser.registrationFee = feeData;
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                
+                showPendingStatus();
+                showToast('Registration fee submitted successfully', 'success');
+                
+            } catch (error) {
+                console.error('Error submitting registration fee:', error);
+                showToast('Failed to submit registration fee', 'error');
+            }
+        }
+
+        // Show Pending Status
+        function showPendingStatus() {
+            document.getElementById('authContainer').style.display = 'none';
+            document.getElementById('registrationFees').style.display = 'none';
+            document.getElementById('userDashboard').style.display = 'none';
+            document.getElementById('pendingStatus').style.display = 'block';
+        }
+
+        // Load User Data
+        async function loadUserData() {
+            try {
+                const userRef = ref(db, `users/${currentUserId}`);
+                const snapshot = await get(userRef);
+                
+                if (snapshot.exists()) {
+                    currentUser = snapshot.val();
+                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                    
+                    // Update task earnings based on referrals
+                    taskEarnings = currentUser.perTaskEarning || 0.013;
+                    
+                    // Check if tasks need reset
+                    await checkTaskReset();
+                    
+                    // Show dashboard
+                    document.getElementById('authContainer').style.display = 'none';
+                    document.getElementById('registrationFees').style.display = 'none';
+                    document.getElementById('pendingStatus').style.display = 'none';
+                    document.getElementById('userDashboard').style.display = 'block';
+                    document.getElementById('userDashboard').classList.add('active');
+                    
+                    // Load dashboard data
+                    updateDashboardUI();
+                    loadTasks();
+                    loadNotifications();
+                    loadWithdrawalHistory();
+                    loadTeam();
+                    loadLevels();
+                    loadChatMessages();
+                    
+                    // Listen for real-time updates
+                    setupRealtimeListeners();
+                }
+            } catch (error) {
+                console.error('Error loading user data:', error);
+                showToast('Failed to load user data', 'error');
+            }
+        }
+
+        // Check Task Reset
+        async function checkTaskReset() {
+            const today = new Date().toDateString();
+            const lastReset = currentUser.lastTaskReset;
+            
+            if (lastReset !== today) {
+                // Reset tasks
+                await update(ref(db, `users/${currentUserId}`), {
+                    completedTasks: [],
+                    tasksCompleted: 0,
+                    lastTaskReset: today
+                });
+                
+                currentUser.completedTasks = [];
+                currentUser.tasksCompleted = 0;
+                currentUser.lastTaskReset = today;
+                
+                // Decrease task earnings if no referrals today
+                if (taskEarnings > 0.00005 && (!currentUser.lastReferralDate || new Date(currentUser.lastReferralDate).toDateString() !== today)) {
+                    const newEarning = Math.max(0.00005, taskEarnings - 0.001);
+                    await update(ref(db, `users/${currentUserId}`), {
+                        perTaskEarning: newEarning
+                    });
+                    taskEarnings = newEarning;
+                }
+            }
+        }
+
+        // Update Dashboard UI
+        function updateDashboardUI() {
+            document.getElementById('currentBalance').textContent = currentUser.currentBalance.toFixed(3);
+            document.getElementById('totalBalance').textContent = currentUser.totalBalance.toFixed(3);
+            document.getElementById('teamCount').textContent = currentUser.referrals || 0;
+            document.getElementById('tasksCompleted').textContent = `${currentUser.tasksCompleted || 0}/10`;
+            document.getElementById('withdrawAvailable').textContent = currentUser.currentBalance.toFixed(3);
+            
+            // Update profile picture
+            if (currentUser.profilePicture) {
+                document.getElementById('headerProfilePic').src = currentUser.profilePicture;
+                document.getElementById('profilePicture').src = currentUser.profilePicture;
+            }
+            
+            // Update referral link and code
+            const baseUrl = window.location.origin + window.location.pathname;
+            document.getElementById('referralLink').textContent = `${baseUrl}?ref=${currentUser.referralCode}`;
+            document.getElementById('referralCode').textContent = currentUser.referralCode;
+            
+            // Update profile form
+            document.getElementById('profileName').value = currentUser.name;
+            document.getElementById('profileEmail').value = currentUser.email;
+            document.getElementById('profileWhatsApp').value = currentUser.whatsapp;
+            document.getElementById('profileCity').value = currentUser.city;
+            document.getElementById('profileAddress').value = currentUser.address;
+        }
+
+        // Load Tasks
+        function loadTasks() {
+            const tasksGrid = document.getElementById('tasksGrid');
+            tasksGrid.innerHTML = '';
+            
+            for (let i = 1; i <= 10; i++) {
+                const isCompleted = currentUser.completedTasks && currentUser.completedTasks.includes(i);
+                
+                const taskCard = document.createElement('div');
+                taskCard.className = `task-card ${isCompleted ? 'completed' : ''}`;
+                taskCard.innerHTML = `
+                    <img src="${taskImages[i-1]}" alt="Task ${i}" class="task-image">
+                    <div class="task-info">
+                        <h4>Task ${i}</h4>
+                        <div class="task-earning">Earn: $${taskEarnings.toFixed(4)}</div>
+                        <button class="task-btn" onclick="completeTask(${i})" ${isCompleted ? 'disabled' : ''}>
+                            ${isCompleted ? 'Completed' : 'Complete Task'}
+                        </button>
+                    </div>
+                `;
+                
+                tasksGrid.appendChild(taskCard);
+            }
+        }
+
+        // Complete Task
+        window.completeTask = async function(taskId) {
+            try {
+                if (currentUser.completedTasks && currentUser.completedTasks.includes(taskId)) {
+                    showToast('Task already completed', 'error');
+                    return;
+                }
+                
+                const completedTasks = currentUser.completedTasks || [];
+                completedTasks.push(taskId);
+                
+                const newBalance = currentUser.currentBalance + taskEarnings;
+                const newTotalBalance = currentUser.totalBalance + taskEarnings;
+                
+                await update(ref(db, `users/${currentUserId}`), {
+                    completedTasks,
+                    tasksCompleted: completedTasks.length,
+                    currentBalance: newBalance,
+                    totalBalance: newTotalBalance
+                });
+                
+                currentUser.completedTasks = completedTasks;
+                currentUser.tasksCompleted = completedTasks.length;
+                currentUser.currentBalance = newBalance;
+                currentUser.totalBalance = newTotalBalance;
+                
+                updateDashboardUI();
+                loadTasks();
+                showToast(`Task ${taskId} completed! Earned $${taskEarnings.toFixed(4)}`, 'success');
+                
+            } catch (error) {
+                console.error('Error completing task:', error);
+                showToast('Failed to complete task', 'error');
+            }
+        }
+
+        // Handle Withdraw
+        async function handleWithdraw(e) {
+            e.preventDefault();
+            
+            const method = document.getElementById('withdrawMethod').value;
+            const accountNumber = document.getElementById('withdrawAccount').value.trim();
+            const accountName = document.getElementById('withdrawName').value.trim();
+            const amount = parseFloat(document.getElementById('withdrawAmount').value);
+            
+            // Validate withdrawal rules (hidden from user)
+            const withdrawalCount = currentUser.withdrawalCount || 0;
+            const referralCount = currentUser.referrals || 0;
+            
+            // Check withdrawal limits
+            if (withdrawalCount < 2) {
+                if (withdrawalCount === 0 && amount < 0.5) {
+                    showToast('Minimum withdrawal is $0.50', 'error');
+                    return;
+                }
+                if (withdrawalCount === 1 && amount < 1.0) {
+                    showToast('Minimum withdrawal is $1.00', 'error');
+                    return;
+                }
+            } else if (withdrawalCount >= 3 && referralCount < 1) {
+                showToast('Withdrawal blocked. Complete at least 1 referral to continue.', 'error');
+                return;
+            } else if (referralCount >= 1 && withdrawalCount >= 2 && amount < 1.5) {
+                showToast('Minimum withdrawal is $1.50', 'error');
+                return;
+            } else if (referralCount >= 2 && amount < 2.0) {
+                showToast('Minimum withdrawal is $2.00', 'error');
+                return;
+            }
+            
+            // Check balance
+            const fee = amount * 0.06;
+            const totalDeduction = amount + fee;
+            
+            if (currentUser.currentBalance < totalDeduction) {
+                showToast('Insufficient balance', 'error');
+                return;
+            }
+            
+            try {
+                // Create withdrawal request
+                const withdrawalRef = push(ref(db, `users/${currentUserId}/withdrawals`));
+                await set(withdrawalRef, {
+                    method,
+                    accountNumber,
+                    accountName,
+                    amount,
+                    fee,
+                    totalDeduction,
+                    status: 'pending',
+                    createdAt: new Date().toISOString()
+                });
+                
+                // Deduct from balance
+                const newBalance = currentUser.currentBalance - totalDeduction;
+                await update(ref(db, `users/${currentUserId}`), {
+                    currentBalance: newBalance,
+                    withdrawalCount: withdrawalCount + 1
+                });
+                
+                currentUser.currentBalance = newBalance;
+                currentUser.withdrawalCount = withdrawalCount + 1;
+                
+                // Create notification for admin
+                const adminNotificationRef = push(ref(db, 'adminNotifications'));
+                await set(adminNotificationRef, {
+                    type: 'withdrawal',
+                    userId: currentUserId,
+                    userName: currentUser.name,
+                    method,
+                    accountNumber,
+                    accountName,
+                    amount,
+                    timestamp: new Date().toISOString(),
+                    read: false
+                });
+                
+                updateDashboardUI();
+                loadWithdrawalHistory();
+                document.getElementById('withdrawForm').reset();
+                showToast('Withdrawal request submitted successfully', 'success');
+                
+            } catch (error) {
+                console.error('Error creating withdrawal:', error);
+                showToast('Failed to submit withdrawal', 'error');
+            }
+        }
+
+        // Load Withdrawal History
+        async function loadWithdrawalHistory() {
+            try {
+                const withdrawalsRef = ref(db, `users/${currentUserId}/withdrawals`);
+                const snapshot = await get(withdrawalsRef);
+                
+                const historyList = document.getElementById('withdrawalHistoryList');
+                historyList.innerHTML = '';
+                
+                if (snapshot.exists()) {
+                    const withdrawals = [];
+                    snapshot.forEach((childSnapshot) => {
+                        withdrawals.push({
+                            id: childSnapshot.key,
+                            ...childSnapshot.val()
+                        });
+                    });
+                    
+                    // Sort by date (newest first)
+                    withdrawals.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                    
+                    withdrawals.forEach(withdrawal => {
+                        const item = document.createElement('div');
+                        item.className = `withdrawal-item ${withdrawal.status}`;
+                        item.innerHTML = `
+                            <div>
+                                <h4>$${withdrawal.amount.toFixed(2)} - ${withdrawal.method.toUpperCase()}</h4>
+                                <p style="font-size: 12px; color: #6B7280;">${new Date(withdrawal.createdAt).toLocaleDateString()}</p>
+                            </div>
+                            <span class="status-badge ${withdrawal.status}">${withdrawal.status.toUpperCase()}</span>
+                        `;
+                        historyList.appendChild(item);
+                    });
+                } else {
+                    historyList.innerHTML = '<p style="text-align: center; color: #6B7280;">No withdrawal history</p>';
+                }
+            } catch (error) {
+                console.error('Error loading withdrawal history:', error);
+            }
+        }
+
+        // Load Team
+        async function loadTeam() {
+            try {
+                const teamList = document.getElementById('teamList');
+                teamList.innerHTML = '';
+                
+                if (currentUser.team && currentUser.team.length > 0) {
+                    for (const memberId of currentUser.team) {
+                        const memberRef = ref(db, `users/${memberId}`);
+                        const snapshot = await get(memberRef);
+                        
+                        if (snapshot.exists()) {
+                            const member = snapshot.val();
+                            const memberElement = document.createElement('div');
+                            memberElement.className = 'team-member';
+                            memberElement.innerHTML = `
+                                <img src="${member.profilePicture || 'https://via.placeholder.com/40'}" alt="${member.name}">
+                                <div class="team-member-info">
+                                    <h4>${member.name}</h4>
+                                    <p>${member.email}</p>
+                                    <p>Balance: $${member.currentBalance.toFixed(3)}</p>
+                                </div>
+                            `;
+                            teamList.appendChild(memberElement);
+                        }
+                    }
+                } else {
+                    teamList.innerHTML = '<p style="text-align: center; color: #6B7280;">No team members yet. Share your referral link!</p>';
+                }
+            } catch (error) {
+                console.error('Error loading team:', error);
+            }
+        }
+
+        // Load Levels
+        function loadLevels() {
+            const levels = [
+                { level: 1, members: 10, bonus: 1 },
+                { level: 2, members: 20, bonus: 1.5 },
+                { level: 3, members: 35, bonus: 2.5 },
+                { level: 4, members: 45, bonus: 5 },
+                { level: 5, members: 60, bonus: 7 },
+                { level: 6, members: 75, bonus: 8.6 },
+                { level: 7, members: 200, bonus: 'Monthly Salary' }
+            ];
+            
+            const levelsList = document.getElementById('levelsList');
+            levelsList.innerHTML = '';
+            
+            const referralCount = currentUser.referrals || 0;
+            
+            levels.forEach(levelData => {
+                const isCompleted = referralCount >= levelData.members;
+                const isClaimed = currentUser.levelBonusClaimed && currentUser.levelBonusClaimed.includes(levelData.level);
+                const progress = Math.min(100, (referralCount / levelData.members) * 100);
+                
+                const levelCard = document.createElement('div');
+                levelCard.className = `level-card ${isCompleted ? 'completed' : ''}`;
+                levelCard.innerHTML = `
+                    <h4>Level ${levelData.level} - ${levelData.bonus === 'Monthly Salary' ? 'Monthly Salary' : '$' + levelData.bonus + ' Bonus'}</h4>
+                    <p>Required Members: ${levelData.members}</p>
+                    <p>Current Members: ${referralCount}</p>
+                    <div class="level-progress">
+                        <div class="level-progress-bar" style="width: ${progress}%"></div>
+                    </div>
+                    ${isCompleted && !isClaimed ? `<button class="btn btn-primary" onclick="claimLevelBonus(${levelData.level})">Claim Bonus</button>` : ''}
+                    ${isClaimed ? '<p style="color: var(--success); font-size: 12px;">✓ Bonus Claimed</p>' : ''}
+                `;
+                levelsList.appendChild(levelCard);
+            });
+        }
+
+        // Claim Level Bonus
+        window.claimLevelBonus = async function(level) {
+            try {
+                const levelBonuses = {
+                    1: 1,
+                    2: 1.5,
+                    3: 2.5,
+                    4: 5,
+                    5: 7,
+                    6: 8.6
+                };
+                
+                if (level === 7) {
+                    // Monthly salary - requires admin approval
+                    showToast('Monthly salary requires admin approval', 'warning');
+                    return;
+                }
+                
+                const bonus = levelBonuses[level];
+                const claimed = currentUser.levelBonusClaimed || [];
+                
+                if (claimed.includes(level)) {
+                    showToast('Bonus already claimed', 'error');
+                    return;
+                }
+                
+                claimed.push(level);
+                
+                const newBalance = currentUser.currentBalance + bonus;
+                const newTotalBalance = currentUser.totalBalance + bonus;
+                
+                await update(ref(db, `users/${currentUserId}`), {
+                    levelBonusClaimed: claimed,
+                    currentBalance: newBalance,
+                    totalBalance: newTotalBalance
+                });
+                
+                currentUser.levelBonusClaimed = claimed;
+                currentUser.currentBalance = newBalance;
+                currentUser.totalBalance = newTotalBalance;
+                
+                updateDashboardUI();
+                loadLevels();
+                showToast(`Level ${level} bonus claimed! +$${bonus}`, 'success');
+                
+            } catch (error) {
+                console.error('Error claiming bonus:', error);
+                showToast('Failed to claim bonus', 'error');
+            }
+        }
+
+        // Handle Profile Update
+        async function handleProfileUpdate(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('profileName').value.trim();
+            const whatsapp = document.getElementById('profileWhatsApp').value.trim();
+            const city = document.getElementById('profileCity').value.trim();
+            const address = document.getElementById('profileAddress').value.trim();
+            const newPassword = document.getElementById('profileNewPassword').value;
+            
+            try {
+                const updateData = {
+                    name,
+                    whatsapp,
+                    city,
+                    address
+                };
+                
+                if (newPassword) {
+                    updateData.password = newPassword;
+                }
+                
+                await update(ref(db, `users/${currentUserId}`), updateData);
+                
+                currentUser = { ...currentUser, ...updateData };
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                
+                document.getElementById('profileNewPassword').value = '';
+                showToast('Profile updated successfully', 'success');
+                
+            } catch (error) {
+                console.error('Error updating profile:', error);
+                showToast('Failed to update profile', 'error');
+            }
+        }
+
+        // Upload Profile Picture
+        window.uploadProfilePicture = async function(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            try {
+                const base64 = await fileToBase64(file);
+                
+                await update(ref(db, `users/${currentUserId}`), {
+                    profilePicture: base64
+                });
+                
+                currentUser.profilePicture = base64;
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                
+                document.getElementById('headerProfilePic').src = base64;
+                document.getElementById('profilePicture').src = base64;
+                
+                showToast('Profile picture updated', 'success');
+                
+            } catch (error) {
+                console.error('Error uploading profile picture:', error);
+                showToast('Failed to upload profile picture', 'error');
+            }
+        }
+
+        // Send Chat Message
+        window.sendChatMessage = async function() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            try {
+                const chatRef = push(ref(db, `chats/${currentUserId}`));
+                await set(chatRef, {
+                    sender: 'user',
+                    message,
+                    timestamp: new Date().toISOString(),
+                    read: false
+                });
+                
+                input.value = '';
+                loadChatMessages();
+                
+            } catch (error) {
+                console.error('Error sending message:', error);
+                showToast('Failed to send message', 'error');
+            }
+        }
+
+        // Send Chat Image
+        window.sendChatImage = async function(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            try {
+                const base64 = await fileToBase64(file);
+                
+                const chatRef = push(ref(db, `chats/${currentUserId}`));
+                await set(chatRef, {
+                    sender: 'user',
+                    image: base64,
+                    timestamp: new Date().toISOString(),
+                    read: false
+                });
+                
+                loadChatMessages();
+                
+            } catch (error) {
+                console.error('Error sending image:', error);
+                showToast('Failed to send image', 'error');
+            }
+        }
+
+        // Load Chat Messages
+        async function loadChatMessages() {
+            try {
+                const chatRef = ref(db, `chats/${currentUserId}`);
+                const snapshot = await get(chatRef);
+                
+                const chatMessages = document.getElementById('chatMessages');
+                chatMessages.innerHTML = '';
+                
+                if (snapshot.exists()) {
+                    const messages = [];
+                    snapshot.forEach((childSnapshot) => {
+                        messages.push(childSnapshot.val());
+                    });
+                    
+                    messages.forEach(msg => {
+                        const messageDiv = document.createElement('div');
+                        messageDiv.className = `chat-message ${msg.sender === 'user' ? 'sent' : ''}`;
+                        
+                        if (msg.sender === 'user') {
+                            messageDiv.innerHTML = `
+                                <img src="${currentUser.profilePicture || 'https://via.placeholder.com/35'}" alt="You">
+                                <div class="chat-message-content">
+                                    ${msg.message || ''}
+                                    ${msg.image ? `<img src="${msg.image}" class="chat-message-image">` : ''}
+                                </div>
+                            `;
+                        } else {
+                            messageDiv.innerHTML = `
+                                <img src="https://via.placeholder.com/35" alt="Admin">
+                                <div class="chat-message-content">
+                                    ${msg.message || ''}
+                                    ${msg.image ? `<img src="${msg.image}" class="chat-message-image">` : ''}
+                                </div>
+                            `;
+                        }
+                        
+                        chatMessages.appendChild(messageDiv);
+                    });
+                    
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }
+            } catch (error) {
+                console.error('Error loading chat messages:', error);
+            }
+        }
+
+        // Load Notifications
+        async function loadNotifications() {
+            try {
+                const notificationsRef = ref(db, `users/${currentUserId}/notifications`);
+                const snapshot = await get(notificationsRef);
+                
+                const notificationList = document.getElementById('notificationList');
+                notificationList.innerHTML = '';
+                
+                let unreadCount = 0;
+                
+                if (snapshot.exists()) {
+                    const notifications = [];
+                    snapshot.forEach((childSnapshot) => {
+                        notifications.push({
+                            id: childSnapshot.key,
+                            ...childSnapshot.val()
+                        });
+                    });
+                    
+                    // Sort by date (newest first)
+                    notifications.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+                    
+                    notifications.forEach(notification => {
+                        if (!notification.read) unreadCount++;
+                        
+                        const item = document.createElement('div');
+                        item.className = `notification-item ${!notification.read ? 'unread' : ''}`;
+                        item.innerHTML = `
+                            <h4>${notification.title}</h4>
+                            <p>${notification.message}</p>
+                            <p class="time">${new Date(notification.timestamp).toLocaleString()}</p>
+                        `;
+                        item.onclick = () => markNotificationAsRead(notification.id);
+                        notificationList.appendChild(item);
+                    });
+                } else {
+                    notificationList.innerHTML = '<p style="text-align: center; color: #6B7280;">No notifications</p>';
+                }
+                
+                // Update notification badge
+                const badge = document.getElementById('notificationBadge');
+                if (unreadCount > 0) {
+                    badge.style.display = 'flex';
+                    badge.textContent = unreadCount;
+                } else {
+                    badge.style.display = 'none';
+                }
+                
+            } catch (error) {
+                console.error('Error loading notifications:', error);
+            }
+        }
+
+        // Mark Notification as Read
+        async function markNotificationAsRead(notificationId) {
+            try {
+                await update(ref(db, `users/${currentUserId}/notifications/${notificationId}`), {
+                    read: true
+                });
+                loadNotifications();
+            } catch (error) {
+                console.error('Error marking notification as read:', error);
+            }
+        }
+
+        // Copy Referral Link
+        window.copyReferralLink = function() {
+            const link = document.getElementById('referralLink').textContent;
+            navigator.clipboard.writeText(link);
+            showToast('Referral link copied!', 'success');
+        }
+
+        // Copy Referral Code
+        window.copyReferralCode = function() {
+            const code = document.getElementById('referralCode').textContent;
+            navigator.clipboard.writeText(code);
+            showToast('Referral code copied!', 'success');
+        }
+
+        // Show Section
+        window.showSection = function(sectionName) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show selected section
+            const section = document.getElementById(`${sectionName}Section`);
+            if (section) {
+                section.classList.add('active');
+            }
+            
+            // Load section-specific data
+            if (sectionName === 'withdrawal-history') {
+                loadWithdrawalHistory();
+            } else if (sectionName === 'team') {
+                loadTeam();
+            } else if (sectionName === 'levels') {
+                loadLevels();
+            } else if (sectionName === 'support') {
+                loadChatMessages();
+            } else if (sectionName === 'notifications') {
+                loadNotifications();
+            }
+        }
+
+        // Hide Section
+        window.hideSection = function() {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+        }
+
+        // Setup Realtime Listeners
+        function setupRealtimeListeners() {
+            // Listen for chat messages
+            const chatRef = ref(db, `chats/${currentUserId}`);
+            onValue(chatRef, (snapshot) => {
+                loadChatMessages();
+            });
+            
+            // Listen for notifications
+            const notificationsRef = ref(db, `users/${currentUserId}/notifications`);
+            onValue(notificationsRef, (snapshot) => {
+                loadNotifications();
+            });
+        }
+
+        // ==================== ADMIN FUNCTIONS ====================
+
+        // Show Admin Dashboard
+        function showAdminDashboard() {
+            document.getElementById('authContainer').style.display = 'none';
+            document.getElementById('userDashboard').style.display = 'none';
+            document.getElementById('adminDashboard').style.display = 'block';
+            document.getElementById('adminDashboard').classList.add('active');
+            
+            loadAdminStats();
+            loadAdminNotifications();
+        }
+
+        // Load Admin Stats
+        async function loadAdminStats() {
+            try {
+                const usersRef = ref(db, 'users');
+                const snapshot = await get(usersRef);
+                
+                let totalUsers = 0;
+                let totalFees = 0;
+                let totalWithdrawals = 0;
+                let approvedUsers = 0;
+                let pendingFees = 0;
+                let pendingWithdrawals = 0;
+                
+                snapshot.forEach((childSnapshot) => {
+                    const user = childSnapshot.val();
+                    totalUsers++;
+                    
+                    if (user.status === 'approved') {
+                        approvedUsers++;
+                        totalFees += 2.3;
+                    }
+                    
+                    if (user.registrationFee && user.registrationFee.status === 'pending') {
+                        pendingFees++;
+                    }
+                    
+                    if (user.withdrawals) {
+                        Object.values(user.withdrawals).forEach(withdrawal => {
+                            if (withdrawal.status === 'approved') {
+                                totalWithdrawals += withdrawal.amount;
+                            } else if (withdrawal.status === 'pending') {
+                                pendingWithdrawals++;
+                            }
+                        });
+                    }
+                });
+                
+                document.getElementById('adminTotalUsers').textContent = totalUsers;
+                document.getElementById('adminTotalFees').textContent = `$${totalFees.toFixed(2)}`;
+                document.getElementById('adminTotalWithdrawals').textContent = `$${totalWithdrawals.toFixed(2)}`;
+                document.getElementById('adminApprovedUsers').textContent = approvedUsers;
+                document.getElementById('adminPendingFees').textContent = pendingFees;
+                document.getElementById('adminPendingWithdrawals').textContent = pendingWithdrawals;
+                
+            } catch (error) {
+                console.error('Error loading admin stats:', error);
+            }
+        }
+
+        // Show Admin Section
+        window.showAdminSection = function(sectionName) {
+            // Hide all sections
+            document.querySelectorAll('#adminDashboard .section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show selected section
+            const section = document.getElementById(`admin-${sectionName}Section`);
+            if (section) {
+                section.classList.add('active');
+            }
+            
+            // Load section-specific data
+            if (sectionName === 'users') {
+                loadAdminUsers();
+            } else if (sectionName === 'pending-fees') {
+                loadAdminPendingFees();
+            } else if (sectionName === 'pending-withdrawals') {
+                loadAdminPendingWithdrawals();
+            } else if (sectionName === 'support') {
+                loadAdminSupport();
+            } else if (sectionName === 'notifications') {
+                loadAdminNotifications();
+            }
+        }
+
+        // Hide Admin Section
+        window.hideAdminSection = function() {
+            document.querySelectorAll('#adminDashboard .section').forEach(section => {
+                section.classList.remove('active');
+            });
+        }
+
+        // Load Admin Users
+        async function loadAdminUsers() {
+            try {
+                const usersRef = ref(db, 'users');
+                const snapshot = await get(usersRef);
+                
+                const usersList = document.getElementById('adminUsersList');
+                usersList.innerHTML = '';
+                
+                snapshot.forEach((childSnapshot) => {
+                    const user = childSnapshot.val();
+                    const userId = childSnapshot.key;
+                    
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${userId.substring(0, 8)}...</td>
+                        <td>${user.name}</td>
+                        <td>${user.email}</td>
+                        <td>${user.password}</td>
+                        <td>${user.whatsapp}</td>
+                        <td>${user.city}</td>
+                        <td>$${user.currentBalance.toFixed(3)}</td>
+                        <td>${user.referrals || 0}</td>
+                        <td><span class="status-badge ${user.status}">${user.status}</span></td>
+                        <td>
+                            <button class="action-btn view" onclick="viewUserDetails('${userId}')">View</button>
+                        </td>
+                    `;
+                    usersList.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Error loading admin users:', error);
+            }
+        }
+
+        // View User Details
+        window.viewUserDetails = function(userId) {
+            get(ref(db, `users/${userId}`)).then((snapshot) => {
+                if (snapshot.exists()) {
+                    const user = snapshot.val();
+                    const modalBody = document.getElementById('modalBody');
+                    modalBody.innerHTML = `
+                        <div style="text-align: center; margin-bottom: 20px;">
+                            <img src="${user.profilePicture || 'https://via.placeholder.com/100'}" style="width: 100px; height: 100px; border-radius: 50%; margin-bottom: 10px;">
+                            <h3>${user.name}</h3>
+                        </div>
+                        <p><strong>Email:</strong> ${user.email}</p>
+                        <p><strong>Password:</strong> ${user.password}</p>
+                        <p><strong>WhatsApp:</strong> ${user.whatsapp}</p>
+                        <p><strong>City:</strong> ${user.city}</p>
+                        <p><strong>Address:</strong> ${user.address}</p>
+                        <p><strong>Country:</strong> ${user.country}</p>
+                        <p><strong>Current Balance:</strong> $${user.currentBalance.toFixed(3)}</p>
+                        <p><strong>Total Balance:</strong> $${user.totalBalance.toFixed(3)}</p>
+                        <p><strong>Per Task Earning:</strong> $${user.perTaskEarning.toFixed(4)}</p>
+                        <p><strong>Referrals:</strong> ${user.referrals || 0}</p>
+                        <p><strong>Status:</strong> ${user.status}</p>
+                        <p><strong>Registered:</strong> ${new Date(user.createdAt).toLocaleString()}</p>
+                    `;
+                    document.getElementById('modalTitle').textContent = 'User Details';
+                    document.getElementById('modal').classList.add('active');
+                }
+            });
+        }
+
+        // Load Admin Pending Fees
+        async function loadAdminPendingFees() {
+            try {
+                const usersRef = ref(db, 'users');
+                const snapshot = await get(usersRef);
+                
+                const pendingFeesList = document.getElementById('adminPendingFeesList');
+                pendingFeesList.innerHTML = '';
+                
+                let hasPending = false;
+                
+                snapshot.forEach((childSnapshot) => {
+                    const user = childSnapshot.val();
+                    const userId = childSnapshot.key;
+                    
+                    if (user.registrationFee && user.registrationFee.status === 'pending') {
+                        hasPending = true;
+                        const fee = user.registrationFee;
+                        
+                        const item = document.createElement('div');
+                        item.className = 'withdrawal-item pending';
+                        item.innerHTML = `
+                            <div>
+                                <h4>${user.name}</h4>
+                                <p><strong>Email:</strong> ${user.email}</p>
+                                <p><strong>Account:</strong> ${fee.accountName} - ${fee.accountNumber}</p>
+                                <p><strong>Transaction ID:</strong> ${fee.transactionId}</p>
+                                <p><strong>Submitted:</strong> ${new Date(fee.submittedAt).toLocaleString()}</p>
+                            </div>
+                            <div>
+                                <button class="action-btn view" onclick="viewScreenshot('${userId}')">View Screenshot</button>
+                                <button class="action-btn approve" onclick="approveRegistrationFee('${userId}')">Approve</button>
+                                <button class="action-btn reject" onclick="rejectRegistrationFee('${userId}')">Reject</button>
+                            </div>
+                        `;
+                        pendingFeesList.appendChild(item);
+                    }
+                });
+                
+                if (!hasPending) {
+                    pendingFeesList.innerHTML = '<p style="text-align: center; color: #6B7280;">No pending registration fees</p>';
+                }
+            } catch (error) {
+                console.error('Error loading pending fees:', error);
+            }
+        }
+
+        // View Screenshot
+        window.viewScreenshot = function(userId) {
+            get(ref(db, `users/${userId}/registrationFee/screenshot`)).then((snapshot) => {
+                if (snapshot.exists()) {
+                    const modalBody = document.getElementById('modalBody');
+                    modalBody.innerHTML = `
+                        <img src="${snapshot.val()}" style="max-width: 100%; border-radius: 10px;">
+                    `;
+                    document.getElementById('modalTitle').textContent = 'Payment Screenshot';
+                    document.getElementById('modal').classList.add('active');
+                }
+            });
+        }
+
+        // Approve Registration Fee
+        window.approveRegistrationFee = async function(userId) {
+            try {
+                await update(ref(db, `users/${userId}`), {
+                    status: 'approved',
+                    'registrationFee/status': 'approved'
+                });
+                
+                // Send notification to user
+                const notificationRef = push(ref(db, `users/${userId}/notifications`));
+                await set(notificationRef, {
+                    title: 'Registration Approved',
+                    message: 'Your registration has been approved! You can now start earning.',
+                    timestamp: new Date().toISOString(),
+                    read: false
+                });
+                
+                // Process referral bonuses
+                await processReferralBonus(userId);
+                
+                loadAdminPendingFees();
+                loadAdminStats();
+                showToast('Registration fee approved', 'success');
+                
+            } catch (error) {
+                console.error('Error approving registration fee:', error);
+                showToast('Failed to approve registration fee', 'error');
+            }
+        }
+
+        // Reject Registration Fee
+        window.rejectRegistrationFee = async function(userId) {
+            try {
+                await update(ref(db, `users/${userId}`), {
+                    status: 'rejected',
+                    'registrationFee/status': 'rejected'
+                });
+                
+                // Send notification to user
+                const notificationRef = push(ref(db, `users/${userId}/notifications`));
+                await set(notificationRef, {
+                    title: 'Registration Rejected',
+                    message: 'Your registration fee was rejected. Please contact support.',
+                    timestamp: new Date().toISOString(),
+                    read: false
+                });
+                
+                loadAdminPendingFees();
+                loadAdminStats();
+                showToast('Registration fee rejected', 'success');
+                
+            } catch (error) {
+                console.error('Error rejecting registration fee:', error);
+                showToast('Failed to reject registration fee', 'error');
+            }
+        }
+
+        // Process Referral Bonus
+        async function processReferralBonus(newUserId) {
+            try {
+                const userRef = ref(db, `users/${newUserId}`);
+                const userSnapshot = await get(userRef);
+                
+                if (!userSnapshot.exists()) return;
+                
+                const user = userSnapshot.val();
+                const referredBy = user.referredBy;
+                
+                if (!referredBy) return;
+                
+                // Find referrer
+                const usersRef = ref(db, 'users');
+                const snapshot = await get(usersRef);
+                
+                let referrerId = null;
+                let referrer = null;
+                
+                snapshot.forEach((childSnapshot) => {
+                    if (childSnapshot.val().referralCode === referredBy) {
+                        referrerId = childSnapshot.key;
+                        referrer = childSnapshot.val();
+                    }
+                });
+                
+                if (!referrerId || !referrer) return;
+                
+                // Give direct referrer bonus
+                const directBonus = 0.45;
+                const newBalance = referrer.currentBalance + directBonus;
+                const newTotalBalance = referrer.totalBalance + directBonus;
+                const newTaskEarning = (referrer.perTaskEarning || 0.013) + 0.005;
+                
+                await update(ref(db, `users/${referrerId}`), {
+                    currentBalance: newBalance,
+                    totalBalance: newTotalBalance,
+                    perTaskEarning: newTaskEarning
+                });
+                
+                // Send notification to referrer
+                const notificationRef = push(ref(db, `users/${referrerId}/notifications`));
+                await set(notificationRef, {
+                    title: 'Referral Bonus!',
+                    message: `You earned $${directBonus} from ${user.name}'s registration!`,
+                    timestamp: new Date().toISOString(),
+                    read: false
+                });
+                
+                // Check for 3 referrals in 24 hours bonus
+                const today = new Date().toDateString();
+                const lastReferralDate = referrer.lastReferralDate;
+                const dailyReferralCount = referrer.dailyReferralCount || 0;
+                
+                let newDailyCount = dailyReferralCount;
+                if (lastReferralDate === today) {
+                    newDailyCount++;
+                } else {
+                    newDailyCount = 1;
+                }
+                
+                await update(ref(db, `users/${referrerId}`), {
+                    lastReferralDate: today,
+                    dailyReferralCount: newDailyCount
+                });
+                
+                if (newDailyCount === 3) {
+                    const instantBonus = 0.3;
+                    await update(ref(db, `users/${referrerId}`), {
+                        currentBalance: referrer.currentBalance + instantBonus,
+                        totalBalance: referrer.totalBalance + instantBonus
+                    });
+                    
+                    const bonusNotificationRef = push(ref(db, `users/${referrerId}/notifications`));
+                    await set(bonusNotificationRef, {
+                        title: 'Instant Bonus!',
+                        message: `You earned $${instantBonus} instant bonus for 3 referrals today!`,
+                        timestamp: new Date().toISOString(),
+                        read: false
+                    });
+                }
+                
+                // Give second level referrer bonus
+                if (referrer.referredBy) {
+                    snapshot.forEach((childSnapshot) => {
+                        if (childSnapshot.val().referralCode === referrer.referredBy) {
+                            const secondLevelId = childSnapshot.key;
+                            const secondLevelUser = childSnapshot.val();
+                            
+                            const secondLevelBonus = 0.1;
+                            const secondLevelTaskEarning = (secondLevelUser.perTaskEarning || 0.013) + 0.003;
+                            
+                            update(ref(db, `users/${secondLevelId}`), {
+                                currentBalance: secondLevelUser.currentBalance + secondLevelBonus,
+                                totalBalance: secondLevelUser.totalBalance + secondLevelBonus,
+                                perTaskEarning: secondLevelTaskEarning
+                            });
+                        }
+                    });
+                }
+                
+                // Give higher level referrers bonus
+                // This would require traversing up the referral tree
+                // For simplicity, we're implementing 2 levels here
+                
+            } catch (error) {
+                console.error('Error processing referral bonus:', error);
+            }
+        }
+
+        // Load Admin Pending Withdrawals
+        async function loadAdminPendingWithdrawals() {
+            try {
+                const usersRef = ref(db, 'users');
+                const snapshot = await get(usersRef);
+                
+                const pendingWithdrawalsList = document.getElementById('adminPendingWithdrawalsList');
+                pendingWithdrawalsList.innerHTML = '';
+                
+                let hasPending = false;
+                
+                snapshot.forEach((childSnapshot) => {
+                    const user = childSnapshot.val();
+                    const userId = childSnapshot.key;
+                    
+                    if (user.withdrawals) {
+                        Object.entries(user.withdrawals).forEach(([withdrawalId, withdrawal]) => {
+                            if (withdrawal.status === 'pending') {
+                                hasPending = true;
+                                
+                                const item = document.createElement('div');
+                                item.className = 'withdrawal-item pending';
+                                item.innerHTML = `
+                                    <div>
+                                        <h4>${user.name}</h4>
+                                        <p><strong>Email:</strong> ${user.email}</p>
+                                        <p><strong>Method:</strong> ${withdrawal.method.toUpperCase()}</p>
+                                        <p><strong>Account:</strong> ${withdrawal.accountName} - ${withdrawal.accountNumber}</p>
+                                        <p><strong>Amount:</strong> $${withdrawal.amount.toFixed(2)}</p>
+                                        <p><strong>Fee:</strong> $${withdrawal.fee.toFixed(2)}</p>
+                                        <p><strong>Total:</strong> $${withdrawal.totalDeduction.toFixed(2)}</p>
+                                        <p><strong>Requested:</strong> ${new Date(withdrawal.createdAt).toLocaleString()}</p>
+                                    </div>
+                                    <div>
+                                        <button class="action-btn approve" onclick="approveWithdrawal('${userId}', '${withdrawalId}')">Approve</button>
+                                        <button class="action-btn reject" onclick="rejectWithdrawal('${userId}', '${withdrawalId}')">Reject</button>
+                                    </div>
+                                `;
+                                pendingWithdrawalsList.appendChild(item);
+                            }
+                        });
+                    }
+                });
+                
+                if (!hasPending) {
+                    pendingWithdrawalsList.innerHTML = '<p style="text-align: center; color: #6B7280;">No pending withdrawals</p>';
+                }
+            } catch (error) {
+                console.error('Error loading pending withdrawals:', error);
+            }
+        }
+
+        // Approve Withdrawal
+        window.approveWithdrawal = async function(userId, withdrawalId) {
+            try {
+                await update(ref(db, `users/${userId}/withdrawals/${withdrawalId}`), {
+                    status: 'approved'
+                });
+                
+                // Send notification to user
+                const notificationRef = push(ref(db, `users/${userId}/notifications`));
+                await set(notificationRef, {
+                    title: 'Withdrawal Approved',
+                    message: 'Your withdrawal has been approved and processed.',
+                    timestamp: new Date().toISOString(),
+                    read: false
+                });
+                
+                loadAdminPendingWithdrawals();
+                loadAdminStats();
+                showToast('Withdrawal approved', 'success');
+                
+            } catch (error) {
+                console.error('Error approving withdrawal:', error);
+                showToast('Failed to approve withdrawal', 'error');
+            }
+        }
+
+        // Reject Withdrawal
+        window.rejectWithdrawal = async function(userId, withdrawalId) {
+            try {
+                // Get withdrawal details
+                const withdrawalSnapshot = await get(ref(db, `users/${userId}/withdrawals/${withdrawalId}`));
+                const withdrawal = withdrawalSnapshot.val();
+                
+                // Refund amount to user
+                const userSnapshot = await get(ref(db, `users/${userId}`));
+                const user = userSnapshot.val();
+                
+                const refundAmount = withdrawal.totalDeduction;
+                const newBalance = user.currentBalance + refundAmount;
+                
+                await update(ref(db, `users/${userId}`), {
+                    currentBalance: newBalance
+                });
+                
+                await update(ref(db, `users/${userId}/withdrawals/${withdrawalId}`), {
+                    status: 'rejected'
+                });
+                
+                // Send notification to user
+                const notificationRef = push(ref(db, `users/${userId}/notifications`));
+                await set(notificationRef, {
+                    title: 'Withdrawal Rejected',
+                    message: `Your withdrawal was rejected. $${refundAmount.toFixed(2)} has been refunded to your balance.`,
+                    timestamp: new Date().toISOString(),
+                    read: false
+                });
+                
+                loadAdminPendingWithdrawals();
+                loadAdminStats();
+                showToast('Withdrawal rejected', 'success');
+                
+            } catch (error) {
+                console.error('Error rejecting withdrawal:', error);
+                showToast('Failed to reject withdrawal', 'error');
+            }
+        }
+
+        // Load Admin Support
+        async function loadAdminSupport() {
+            try {
+                const chatsRef = ref(db, 'chats');
+                const snapshot = await get(chatsRef);
+                
+                const chatUsers = document.getElementById('adminChatUsers');
+                chatUsers.innerHTML = '';
+                
+                if (snapshot.exists()) {
+                    snapshot.forEach((childSnapshot) => {
+                        const userId = childSnapshot.key;
+                        const messages = childSnapshot.val();
+                        
+                        // Get user info
+                        get(ref(db, `users/${userId}`)).then((userSnapshot) => {
+                            if (userSnapshot.exists()) {
+                                const user = userSnapshot.val();
+                                
+                                const userDiv = document.createElement('div');
+                                userDiv.className = 'team-member';
+                                userDiv.innerHTML = `
+                                    <img src="${user.profilePicture || 'https://via.placeholder.com/40'}" alt="${user.name}">
+                                    <div class="team-member-info">
+                                        <h4>${user.name}</h4>
+                                        <p>${user.email}</p>
+                                    </div>
+                                    <button class="action-btn view" onclick="openAdminChat('${userId}')">Chat</button>
+                                `;
+                                chatUsers.appendChild(userDiv);
+                            }
+                        });
+                    });
+                } else {
+                    chatUsers.innerHTML = '<p style="text-align: center; color: #6B7280;">No support chats</p>';
+                }
+            } catch (error) {
+                console.error('Error loading admin support:', error);
+            }
+        }
+
+        // Open Admin Chat
+        window.openAdminChat = function(userId) {
+            get(ref(db, `users/${userId}`)).then((userSnapshot) => {
+                if (userSnapshot.exists()) {
+                    const user = userSnapshot.val();
+                    
+                    const modalBody = document.getElementById('modalBody');
+                    modalBody.innerHTML = `
+                        <div style="margin-bottom: 15px;">
+                            <h4>Chat with ${user.name}</h4>
+                        </div>
+                        <div class="chat-messages" id="adminChatMessages" style="height: 300px;"></div>
+                        <div class="chat-input">
+                            <input type="text" id="adminChatInput" placeholder="Type your message...">
+                            <button onclick="sendAdminMessage('${userId}')">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                            <button onclick="document.getElementById('adminChatImageInput').click()" style="background: var(--accent);">
+                                <i class="fas fa-image"></i>
+                            </button>
+                            <input type="file" id="adminChatImageInput" accept="image/*" style="display: none;" onchange="sendAdminChatImage(event, '${userId}')">
+                        </div>
+                    `;
+                    
+                    document.getElementById('modalTitle').textContent = 'Support Chat';
+                    document.getElementById('modal').classList.add('active');
+                    
+                    // Load chat messages
+                    loadAdminChatMessages(userId);
+                }
+            });
+        }
+
+        // Load Admin Chat Messages
+        async function loadAdminChatMessages(userId) {
+            try {
+                const chatRef = ref(db, `chats/${userId}`);
+                const snapshot = await get(chatRef);
+                
+                const chatMessages = document.getElementById('adminChatMessages');
+                chatMessages.innerHTML = '';
+                
+                if (snapshot.exists()) {
+                    const messages = [];
+                    snapshot.forEach((childSnapshot) => {
+                        messages.push(childSnapshot.val());
+                    });
+                    
+                    messages.forEach(msg => {
+                        const messageDiv = document.createElement('div');
+                        messageDiv.className = `chat-message ${msg.sender === 'admin' ? 'sent' : ''}`;
+                        
+                        if (msg.sender === 'user') {
+                            get(ref(db, `users/${userId}`)).then((userSnapshot) => {
+                                if (userSnapshot.exists()) {
+                                    const user = userSnapshot.val();
+                                    messageDiv.innerHTML = `
+                                        <img src="${user.profilePicture || 'https://via.placeholder.com/35'}" alt="${user.name}">
+                                        <div class="chat-message-content">
+                                            ${msg.message || ''}
+                                            ${msg.image ? `<img src="${msg.image}" class="chat-message-image">` : ''}
+                                        </div>
+                                    `;
+                                }
+                            });
+                        } else {
+                            messageDiv.innerHTML = `
+                                <img src="https://via.placeholder.com/35" alt="Admin">
+                                <div class="chat-message-content">
+                                    ${msg.message || ''}
+                                    ${msg.image ? `<img src="${msg.image}" class="chat-message-image">` : ''}
+                                </div>
+                            `;
+                        }
+                        
+                        chatMessages.appendChild(messageDiv);
+                    });
+                    
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }
+            } catch (error) {
+                console.error('Error loading admin chat messages:', error);
+            }
+        }
+
+        // Send Admin Message
+        window.sendAdminMessage = async function(userId) {
+            const input = document.getElementById('adminChatInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            try {
+                const chatRef = push(ref(db, `chats/${userId}`));
+                await set(chatRef, {
+                    sender: 'admin',
+                    message,
+                    timestamp: new Date().toISOString(),
+                    read: false
+                });
+                
+                input.value = '';
+                loadAdminChatMessages(userId);
+                
+            } catch (error) {
+                console.error('Error sending admin message:', error);
+                showToast('Failed to send message', 'error');
+            }
+        }
+
+        // Send Admin Chat Image
+        window.sendAdminChatImage = async function(event, userId) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            try {
+                const base64 = await fileToBase64(file);
+                
+                const chatRef = push(ref(db, `chats/${userId}`));
+                await set(chatRef, {
+                    sender: 'admin',
+                    image: base64,
+                    timestamp: new Date().toISOString(),
+                    read: false
+                });
+                
+                loadAdminChatMessages(userId);
+                
+            } catch (error) {
+                console.error('Error sending admin image:', error);
+                showToast('Failed to send image', 'error');
+            }
+        }
+
+        // Load Admin Notifications
+        async function loadAdminNotifications() {
+            try {
+                const notificationsRef = ref(db, 'adminNotifications');
+                const snapshot = await get(notificationsRef);
+                
+                const notificationList = document.getElementById('adminNotificationList');
+                notificationList.innerHTML = '';
+                
+                let unreadCount = 0;
+                
+                if (snapshot.exists()) {
+                    const notifications = [];
+                    snapshot.forEach((childSnapshot) => {
+                        notifications.push({
+                            id: childSnapshot.key,
+                            ...childSnapshot.val()
+                        });
+                    });
+                    
+                    // Sort by date (newest first)
+                    notifications.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+                    
+                    notifications.forEach(notification => {
+                        if (!notification.read) unreadCount++;
+                        
+                        const item = document.createElement('div');
+                        item.className = `notification-item ${!notification.read ? 'unread' : ''}`;
+                        
+                        if (notification.type === 'registration_fee') {
+                            item.innerHTML = `
+                                <h4>📝 New Registration Fee</h4>
+                                <p><strong>User:</strong> ${notification.userName}</p>
+                                <p><strong>Account:</strong> ${notification.accountName} - ${notification.accountNumber}</p>
+                                <p><strong>Transaction ID:</strong> ${notification.transactionId}</p>
+                                <p class="time">${new Date(notification.timestamp).toLocaleString()}</p>
+                            `;
+                        } else if (notification.type === 'withdrawal') {
+                            item.innerHTML = `
+                                <h4>💸 New Withdrawal Request</h4>
+                                <p><strong>User:</strong> ${notification.userName}</p>
+                                <p><strong>Method:</strong> ${notification.method.toUpperCase()}</p>
+                                <p><strong>Account:</strong> ${notification.accountName} - ${notification.accountNumber}</p>
+                                <p><strong>Amount:</strong> $${notification.amount.toFixed(2)}</p>
+                                <p class="time">${new Date(notification.timestamp).toLocaleString()}</p>
+                            `;
+                        }
+                        
+                        item.onclick = () => markAdminNotificationAsRead(notification.id);
+                        notificationList.appendChild(item);
+                    });
+                } else {
+                    notificationList.innerHTML = '<p style="text-align: center; color: #6B7280;">No notifications</p>';
+                }
+                
+                // Update notification badge
+                const badge = document.getElementById('adminNotificationBadge');
+                if (unreadCount > 0) {
+                    badge.style.display = 'flex';
+                    badge.textContent = unreadCount;
+                } else {
+                    badge.style.display = 'none';
+                }
+                
+            } catch (error) {
+                console.error('Error loading admin notifications:', error);
+            }
+        }
+
+        // Mark Admin Notification as Read
+        async function markAdminNotificationAsRead(notificationId) {
+            try {
+                await update(ref(db, `adminNotifications/${notificationId}`), {
+                    read: true
+                });
+                loadAdminNotifications();
+            } catch (error) {
+                console.error('Error marking notification as read:', error);
+            }
+        }
+
+        // Admin Logout
+        window.adminLogout = function() {
+            localStorage.removeItem('currentUser');
+            currentUser = null;
+            isAdmin = false;
+            currentUserId = null;
+            
+            document.getElementById('adminDashboard').style.display = 'none';
+            document.getElementById('authContainer').style.display = 'flex';
+            document.getElementById('loginForm').style.display = 'block';
+            
+            showToast('Logged out successfully', 'success');
+        }
+
+        // ==================== UTILITY FUNCTIONS ====================
+
+        // File to Base64
+        function fileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+            });
+        }
+
+        // Preview Screenshot
+        window.previewScreenshot = function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const preview = document.getElementById('screenshotPreview');
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Show Toast
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = `toast ${type} active`;
+            
+            // Play sound for notifications
+            if (type === 'success') {
+                playNotificationSound();
+            }
+            
+            setTimeout(() => {
+                toast.classList.remove('active');
+            }, 3000);
+        }
+
+        // Play Notification Sound
+        function playNotificationSound() {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.value = 800;
+            oscillator.type = 'sine';
+            gainNode.gain.value = 0.3;
+            
+            oscillator.start();
+            oscillator.stop(audioContext.currentTime + 0.2);
+        }
+
+        // Close Modal
+        window.closeModal = function() {
+            document.getElementById('modal').classList.remove('active');
+        }
+
+        // Close modal on outside click
+        document.getElementById('modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Export functions to window
+        window.completeTask = completeTask;
+        window.claimLevelBonus = claimLevelBonus;
+        window.uploadProfilePicture = uploadProfilePicture;
+        window.sendChatMessage = sendChatMessage;
+        window.sendChatImage = sendChatImage;
+        window.copyReferralLink = copyReferralLink;
+        window.copyReferralCode = copyReferralCode;
+        window.showSection = showSection;
+        window.hideSection = hideSection;
+        window.showAdminSection = showAdminSection;
+        window.hideAdminSection = hideAdminSection;
+        window.viewUserDetails = viewUserDetails;
+        window.viewScreenshot = viewScreenshot;
+        window.approveRegistrationFee = approveRegistrationFee;
+        window.rejectRegistrationFee = rejectRegistrationFee;
+        window.approveWithdrawal = approveWithdrawal;
+        window.rejectWithdrawal = rejectWithdrawal;
+        window.openAdminChat = openAdminChat;
+        window.sendAdminMessage = sendAdminMessage;
+        window.sendAdminChatImage = sendAdminChatImage;
+        window.adminLogout = adminLogout;
+        window.previewScreenshot = previewScreenshot;
+        window.closeModal = closeModal;
+    </script>
+</body>
+</html>
